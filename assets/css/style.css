@@ -55,11 +55,26 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
 }
+
+nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
 nav a {
     margin-right: 20px;
     font-size: 1.1em;
     font-weight: 500;
+    white-space: nowrap;
+}
+
+nav a:last-child {
+    margin-right: 0;
 }
 
 /* Theme Toggle Button */
@@ -76,6 +91,8 @@ nav a {
     display: flex;
     align-items: center;
     gap: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .theme-toggle:hover {
@@ -85,6 +102,22 @@ nav a {
 
 .theme-toggle i {
     font-size: 1em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    nav {
+        order: 1;
+    }
+    
+    .theme-toggle {
+        order: 2;
+    }
 }
 
 /* Main Content */
@@ -177,9 +210,68 @@ h3 { font-size: 1.3em; color: var(--subheading-color); }
     transition: color 0.3s ease;
 }
 
-/* Icon Styles */
-.social-links i {
-    margin-right: 5px; /* 圖示和文字的距離 */
+/* Social Icons Styles */
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    align-items: center;
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--muted-color);
+    color: var(--bg-color);
+    font-size: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+}
+
+/* Light theme shadow adjustment */
+[data-theme="light"] .social-icon:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Individual icon colors */
+.social-icon.email:hover {
+    background-color: #ea4335;
+}
+
+.social-icon.scholar:hover {
+    background-color: #4285f4;
+}
+
+.social-icon.github:hover {
+    background-color: #333;
+}
+
+.social-icon.linkedin:hover {
+    background-color: #0077b5;
+}
+
+.social-icon.cv:hover {
+    background-color: #dc3545;
+}
+
+/* Contact note styling */
+.contact-note {
+    font-size: 0.9em;
+    color: var(--muted-color);
+    font-style: italic;
+    margin-top: 10px;
+    transition: color 0.3s ease;
 }
 
 /* Lists */
