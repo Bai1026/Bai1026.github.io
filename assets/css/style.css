@@ -101,11 +101,27 @@ h3 { font-size: 1.3em; color: #c9d1d9; }
     margin-right: 15px;
 }
 
+/* Experience Entry Styles */
+.experience-entry {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #30363d;
+}
+.experience-entry:last-child {
+    border-bottom: none;
+}
+.experience-entry h3 {
+    margin-bottom: 10px;
+}
+.experience-entry p {
+    margin-bottom: 15px;
+    color: #c9d1d9;
+}
+
 /* Icon Styles */
 .social-links i {
     margin-right: 5px; /* 圖示和文字的距離 */
 }
-
 
 /* Lists */
 ul {

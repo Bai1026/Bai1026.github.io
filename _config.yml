@@ -1,3 +1,9 @@
-theme: jekyll-theme-minimal
+# Static HTML Website Configuration
 title: Tsung-Min (Vincent) Pai
-description: Personal and professional website of Tsung-Min (Vincent) Pai.
+description: Personal and professional website of Tsung-Min (Vincent) Pai
+author: Tsung-Min (Vincent) Pai
+url: "https://bai1026.github.io"
+
+# GitHub Pages settings
+markdown: kramdown
+highlighter: rouge
