@@ -7,7 +7,7 @@ title: Teaching Experience
 
 ### Generative Artificial Intelligence Course, NTU
 
-_Teaching Assistant (TA) | Taipei, Taiwan | Sep 2024 - Aug 2025_
+Teaching Assistant (TA) | Taipei, Taiwan | Sep 2024 - Aug 2025
 
 - Collaborated with 30+ TAs to manage a class of over 1,000 students and 1,000 auditors.
 - Designed and graded a coursework related to token importance and LLM interpretation with two other TAs.
