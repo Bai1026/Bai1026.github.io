@@ -7,7 +7,7 @@ title: Work Experience
 
 ### AI Engineer, LOGOLO
 
-**Contractor, Remote** | New Westminster, Canada | Sep 2025 - Present
+**Contractor, Remote** | New Westminster, Canada | **Sep 2025 - Present**
 
 - Developed an Al grading system for national legal examinations providing real-time feedback with 95% accuracy.
 - Designed a parallelized Al architecture that accelerated the grading process by 90% over manual methods.
