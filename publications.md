@@ -7,7 +7,7 @@ title: Publications
 
 <div class="publication-entry">
   <div class="publication-image">
-    <img src="/assets/img/billy.png" alt="BILLY Project Thumbnail">
+    <img src="/assets/img/billy.pdf" alt="BILLY Project Thumbnail">
   </div>
   <div class="publication-details">
     <h3>BILLY: Steering Large Language Models via Merging Persona Vectors for Creative Generation</h3>
@@ -28,7 +28,7 @@ title: Publications
 
 <div class="publication-entry">
   <div class="publication-image">
-    <img src="/assets/img/dynamic-superb.png" alt="Dynamic-SUPERB Thumbnail">
+    <img src="/assets/img/superb.png" alt="Dynamic-SUPERB Thumbnail">
   </div>
   <div class="publication-details">
     <h3>Dynamic-SUPERB Phase-2: An Open Benchmark for Comprehensive Evaluation of Spoken Language Models</h3>
@@ -49,7 +49,7 @@ title: Publications
 
 <div class="publication-entry">
   <div class="publication-image">
-    <img src="/assets/img/llm-discussion.png" alt="LLM Discussion Thumbnail">
+    <img src="/assets/img/llm_d.pdf" alt="LLM Discussion Thumbnail">
   </div>
   <div class="publication-details">
     <h3>LLM Discussion: Enhancing the Creativity of Large Language Models via Discussion Framework and Role-Play</h3>
