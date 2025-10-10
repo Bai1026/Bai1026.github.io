@@ -9,10 +9,10 @@ title: About Me
     <p>
       Undergraduate researcher at National Taiwan University (NTU), specializing in Electrical Engineering with a focus on Machine Learning, Generative AI, and Large Language Models. Passionate about building intelligent systems and contributing to cutting-edge research.
     </p>
-    <p>
-      b09602017@g.ntu.edu.tw | 
-      <a href="https://www.linkedin.com/in/tsung-ming-pai/">LinkedIn</a> | 
-      <a href="https://github.com/Bai1026">GitHub</a>
+    <p class="social-links">
+    <a href="mailto:b09602017@g.ntu.edu.tw"><i class="fas fa-envelope"></i> Email</a> | 
+    <a href="https://www.linkedin.com/in/tsung-ming-pai/"><i class="fab fa-linkedin"></i> LinkedIn</a> | 
+    <a href="https://github.com/Bai1026"><i class="fab fa-github"></i> GitHub</a>
     </p>
   </div>
   <div class="intro-photo">

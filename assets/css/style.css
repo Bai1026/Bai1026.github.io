@@ -62,6 +62,49 @@ h3 { font-size: 1.3em; color: #555; }
     object-fit: cover;
 }
 
+/* Publication Entry Styles */
+.publication-entry {
+    display: flex;
+    gap: 25px; /* 圖片和文字之間的距離 */
+    margin-bottom: 40px; /* 每一個條目之間的距離 */
+}
+.publication-image {
+    flex: 1;
+    max-width: 220px; /* 圖片最大寬度 */
+}
+.publication-image img {
+    width: 100%;
+    border: 1px solid #e1e4e8;
+    border-radius: 5px;
+}
+.publication-details {
+    flex: 3;
+}
+.publication-details h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 1.4em;
+    border-bottom: none; /* 移除標題底線 */
+}
+.publication-details .authors {
+    font-style: italic;
+    color: #586069;
+    margin-bottom: 10px;
+}
+.publication-details .venue {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+.publication-details .links a {
+    margin-right: 15px;
+}
+
+/* Icon Styles */
+.social-links i {
+    margin-right: 5px; /* 圖示和文字的距離 */
+}
+
+
 /* Lists */
 ul {
     padding-left: 20px;
