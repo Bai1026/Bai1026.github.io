@@ -253,7 +253,33 @@ class InteractiveHomepage {
             icon.textContent = emoji;
         });
     }
+
+    // Profile Picture Flip Effect
+    setupProfileFlip() {
+        const profileContainer = document.getElementById('profile-flip-container');
+        if (!profileContainer) return;
+
+        profileContainer.addEventListener('click', () => {
+            profileContainer.classList.toggle('flipped');
+        });
+
+        // Add hover effect for visual feedback
+        profileContainer.addEventListener('mouseenter', () => {
+            if (!profileContainer.classList.contains('flipped')) {
+                profileContainer.style.transform = 'scale(1.05)';
+            }
+        });
+
+        profileContainer.addEventListener('mouseleave', () => {
+            profileContainer.style.transform = 'scale(1)';
+        });
+    }
 }
 
 // Initialize when page loads
-new InteractiveHomepage();
+const interactiveHomepage = new InteractiveHomepage();
+
+// Setup profile flip effect
+document.addEventListener('DOMContentLoaded', () => {
+    interactiveHomepage.setupProfileFlip();
+});

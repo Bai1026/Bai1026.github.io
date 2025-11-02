@@ -806,6 +806,43 @@ li {
 .profile-container {
     position: relative;
     z-index: 3;
+    cursor: pointer;
+    perspective: 1000px;
+}
+
+/* 3D Flip Card Styles */
+.profile-flip-card {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.profile-container.flipped .profile-flip-card {
+    transform: rotateY(180deg);
+}
+
+.profile-flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.profile-flip-card-front,
+.profile-flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile-flip-card-back {
+    transform: rotateY(180deg);
 }
 
 .profile-glow {
@@ -1060,6 +1097,11 @@ li {
         height: 250px;
     }
     
+    .profile-flip-card {
+        width: 250px;
+        height: 250px;
+    }
+    
     .news-item {
         flex-direction: column;
         text-align: center;
@@ -1083,6 +1125,11 @@ li {
     }
     
     .profile-pic-hero {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .profile-flip-card {
         width: 200px;
         height: 200px;
     }
