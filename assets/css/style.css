@@ -106,17 +106,67 @@ nav a:last-child {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    .container {
+        padding: 0 10px;
+    }
+    
     header {
-        flex-direction: column;
-        gap: 15px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        padding: 15px 0;
+        margin-bottom: 20px;
     }
     
     nav {
-        order: 1;
+        flex: 1;
+        justify-content: flex-start;
+        gap: 5px;
+        overflow-x: auto;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE 10+ */
+        padding-right: 10px;
+    }
+    
+    nav::-webkit-scrollbar {
+        display: none; /* Safari and Chrome */
+    }
+    
+    nav a {
+        margin-right: 10px;
+        font-size: 0.95rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+        padding: 4px 0;
     }
     
     .theme-toggle {
-        order: 2;
+        flex-shrink: 0;
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        border-radius: 15px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    nav a {
+        font-size: 0.9rem;
+        margin-right: 8px;
+    }
+    
+    .theme-toggle {
+        padding: 5px 10px;
+        font-size: 0.75rem;
     }
 }
 
@@ -840,10 +890,45 @@ li {
     backface-visibility: hidden;
     border-radius: 50%;
     overflow: hidden;
+    transition: opacity 0.8s ease, z-index 0.8s ease;
 }
 
 .profile-flip-card-back {
     transform: rotateY(180deg);
+}
+
+/* Fallback for mobile browsers with poor 3D support */
+@supports not (backface-visibility: hidden) {
+    .profile-flip-card-front,
+    .profile-flip-card-back {
+        -webkit-backface-visibility: visible;
+        backface-visibility: visible;
+    }
+    
+    .profile-flip-card-front {
+        z-index: 2;
+        opacity: 1;
+    }
+    
+    .profile-flip-card-back {
+        z-index: 1;
+        opacity: 0;
+        transform: rotateY(0deg);
+    }
+    
+    .profile-container.flipped .profile-flip-card-front {
+        z-index: 1;
+        opacity: 0;
+    }
+    
+    .profile-container.flipped .profile-flip-card-back {
+        z-index: 2;
+        opacity: 1;
+    }
+    
+    .profile-container.flipped .profile-flip-card {
+        transform: rotateY(0deg);
+    }
 }
 
 .profile-glow {
@@ -1103,6 +1188,40 @@ li {
         height: 250px;
     }
     
+    /* Mobile 3D flip fix */
+    .profile-container {
+        -webkit-perspective: 1000px;
+        perspective: 1000px;
+    }
+    
+    .profile-flip-card {
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    }
+    
+    .profile-flip-card-inner {
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    }
+    
+    .profile-flip-card-front,
+    .profile-flip-card-back {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    
+    .profile-flip-card-back {
+        -webkit-transform: rotateY(180deg);
+        transform: rotateY(180deg);
+    }
+    
+    .profile-container.flipped .profile-flip-card {
+        -webkit-transform: rotateY(180deg);
+        transform: rotateY(180deg);
+    }
+    
     .news-item {
         flex-direction: column;
         text-align: center;
@@ -1133,6 +1252,12 @@ li {
     .profile-flip-card {
         width: 200px;
         height: 200px;
+    }
+    
+    /* Extra mobile 3D support */
+    .profile-container {
+        -webkit-perspective: 800px;
+        perspective: 800px;
     }
 }
 
