@@ -10,6 +10,7 @@
   <script src="assets/js/theme-toggle.js"></script>
 </head>
 <body>
+<body>
   <div class="container">
     <header>
       <nav>
@@ -25,56 +26,153 @@
       </button>
     </header>
 
-    <main>
-      <div class="intro-header">
-        <div class="intro-text">
-          <h1>Hi! I'm Tsung-Min (Vincent) Pai</h1>
-          <p>
-            I am an undergraduate student at department of <a href="https://web.ee.ntu.edu.tw/" target="_blank">Electrical Engineering</a>, <a href="https://www.ntu.edu.tw/" target="_blank">National Taiwan University (NTU)</a>, focusing on Machine Learning, Generative AI, and Large Language Models. Passionate about building intelligent systems and contributing to cutting-edge research.
-          </p>
-          <div class="social-icons">
-            <a href="mailto:b09602017@g.ntu.edu.tw" title="Email" class="social-icon email">
-              <i class="fas fa-envelope"></i>
-            </a>
-            <a href="https://scholar.google.com/citations?hl=zh-TW&user=7Hq3tdcAAAAJ&view_op=list_works" title="Google Scholar" class="social-icon scholar">
-              <i class="fas fa-graduation-cap"></i>
-            </a>
-            <a href="https://github.com/Bai1026" title="GitHub" class="social-icon github">
-              <i class="fab fa-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/tsung-ming-pai/" title="LinkedIn" class="social-icon linkedin">
-              <i class="fab fa-linkedin"></i>
-            </a>
-            <!-- <a href="https://github.com/Bai1026/Tsung_Min_Pai_CV/blob/main/Tsung_Min_Pai___CV.pdf" title="CV" class="social-icon cv"> -->
-              <a href="assets/documents/CV.pdf" title="CV" class="social-icon cv" target="_blank">
-              <i class="fas fa-file-alt"></i>
-            </a>
+    <!-- Interactive Hero Section -->
+    <section class="hero-section">
+      <div id="particles-canvas"></div>
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-greeting">
+            <span class="wave-emoji">👋</span>
+            <span class="greeting-text">Hello, I'm</span>
           </div>
-          <p class="contact-note">Email and LinkedIn are the best way to reach me.</p>
+          <h1 class="hero-name">
+            <span class="typewriter" id="typewriter-name"></span>
+            <span class="cursor">|</span>
+          </h1>
+          <div class="hero-roles">
+            <span class="typewriter-roles" id="typewriter-roles"></span>
+          </div>
+          <p class="hero-description">
+            Passionate about <span class="highlight">Machine Learning</span>, 
+            <span class="highlight">Generative AI</span>, and 
+            <span class="highlight">Large Language Models</span>. 
+            Building intelligent systems and contributing to cutting-edge research.
+          </p>
+          <div class="hero-cta">
+            <button class="cta-primary" data-scroll-target="#about-section">
+              <span>Get In Touch</span>
+              <i class="fas fa-paper-plane"></i>
+            </button>
+            <button class="cta-secondary" data-scroll-target="#news-section">
+              <span>News</span>
+              <i class="fas fa-arrow-down"></i>
+            </button>
+          </div>
         </div>
-        <div class="intro-photo">
-          <img src="assets/img/profile.jpg" alt="Tsung-Min Pai" class="profile-pic">
+        <div class="hero-visual">
+          <div class="profile-container floating">
+            <div class="profile-glow"></div>
+            <img src="assets/img/profile.jpg" alt="Tsung-Min Pai" class="profile-pic-hero">
+          </div>
+          <div class="floating-elements">
+            <div class="floating-icon" data-icon="🤖" style="--delay: 0s; --duration: 3s;"></div>
+            <div class="floating-icon" data-icon="🧠" style="--delay: 1s; --duration: 4s;"></div>
+            <div class="floating-icon" data-icon="⚡" style="--delay: 2s; --duration: 3.5s;"></div>
+            <div class="floating-icon" data-icon="🚀" style="--delay: 0.5s; --duration: 4.5s;"></div>
+          </div>
         </div>
       </div>
+      <div class="scroll-indicator">
+        <div class="scroll-line"></div>
+        <span class="scroll-text">Scroll to explore</span>
+      </div>
+    </section>
 
-      <h2>News</h2>
-      <ul>
-        <li>🎉<strong>[Oct 2025]</strong> Our paper, <strong>BILLY: Steering Large Language Models via Merging Persona Vectors for Creative Generation</strong>, has released.</li>
-        <li>🧑‍💻<strong>[Sep 2025]</strong> Started my new role as an AI Engineer (Contractor) at LOGOLO.</li>
-        <li>🎉<strong>[Nov 2024]</strong> Our paper, <strong>Dynamic-SUPERB Phase-2: An Open Benchmark for Comprehensive Evaluation of Spoken Language Models</strong>, was accepted to <a href="https://iclr.cc/Conferences/2025" target="_blank">ICLR 2025</a>.</li>
-        <li>🧑‍💻<strong>[Sep 2024]</strong> Started my full-time position as an AI Engineer at Genibuilder.</li>
-        <li>🧑‍💻<strong>[Jul 2024]</strong> Started my summer internship as an AI Engineer at Compal Electronics.</li>
-        <li>🎉<strong>[May 2024]</strong> Our paper, <strong>LLM Discussion: Enhancing the Creativity of Large Language Models via Discussion Framework and Role-Play</strong>, has been accepted to <a href="https://colmweb.org/" target="_blank">COLM 2024</a>.</li>
-        <li>🧑‍🔬<strong>[Nov 2023]</strong> Started a new undergraduate research position at the Robot Learning Laboratory (RLLab), NTU.</li>
-        <li>🧑‍🔬<strong>[Aug 2023]</strong> Started a new undergraduate research position at the Speech Processing and Machine Learning Laboratory (SPMLLab), NTU.</li>
-        <li>🧑‍🔬<strong>[Jul 2023]</strong> Started my research internship at IIS, Academia Sinica.</li>
-        <li>🧑‍🔬<strong>[Feb 2022]</strong> Started my first undergraduate research position at the Wireless and Mobile Networking Laboratory (WMNLab), NTU.</li>
-      </ul>
+    <!-- About Section with Social Links -->
+    <main>
+      <section id="about-section" class="reveal-section">
+        <div class="intro-header">
+          <div class="intro-text">
+            <h2>About Me</h2>
+            <p>
+              I am an undergraduate student at department of <a href="https://web.ee.ntu.edu.tw/" target="_blank">Electrical Engineering</a>, <a href="https://www.ntu.edu.tw/" target="_blank">National Taiwan University (NTU)</a>, focusing on Machine Learning, Generative AI, and Large Language Models.
+            </p>
+            <div class="social-icons">
+              <a href="mailto:b09602017@g.ntu.edu.tw" title="Email" class="social-icon email">
+                <i class="fas fa-envelope"></i>
+              </a>
+              <a href="https://scholar.google.com/citations?hl=zh-TW&user=7Hq3tdcAAAAJ&view_op=list_works" title="Google Scholar" class="social-icon scholar">
+                <i class="fas fa-graduation-cap"></i>
+              </a>
+              <a href="https://github.com/Bai1026" title="GitHub" class="social-icon github">
+                <i class="fab fa-github"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/tsung-ming-pai/" title="LinkedIn" class="social-icon linkedin">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="assets/documents/CV.pdf" title="CV" class="social-icon cv" target="_blank">
+                <i class="fas fa-file-alt"></i>
+              </a>
+            </div>
+            <p class="contact-note">Email and LinkedIn are the best way to reach me.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="news-section" class="reveal-section">
+        <h2>Latest News</h2>
+        <div class="news-grid">
+          <div class="news-item highlight-news">
+            <div class="news-icon">🎉</div>
+            <div class="news-content">
+              <div class="news-date">[Oct 2025]</div>
+              <div class="news-title">BILLY Paper Released</div>
+              <div class="news-description">Our paper, <strong>BILLY: Steering Large Language Models via Merging Persona Vectors for Creative Generation</strong>, has been released.</div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-icon">🧑‍💻</div>
+            <div class="news-content">
+              <div class="news-date">[Sep 2025]</div>
+              <div class="news-title">New AI Engineer Role</div>
+              <div class="news-description">Started my new role as an AI Engineer (Contractor) at LOGOLO.</div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-icon">🎉</div>
+            <div class="news-content">
+              <div class="news-date">[Nov 2024]</div>
+              <div class="news-title">ICLR 2025 Acceptance</div>
+              <div class="news-description">Our paper, <strong>Dynamic-SUPERB Phase-2</strong>, was accepted to <a href="https://iclr.cc/Conferences/2025" target="_blank">ICLR 2025</a>.</div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-icon">🧑‍💻</div>
+            <div class="news-content">
+              <div class="news-date">[Sep 2024]</div>
+              <div class="news-title">AI Engineer at Genibuilder</div>
+              <div class="news-description">Started my full-time position as an AI Engineer at Genibuilder.</div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-icon">🎉</div>
+            <div class="news-content">
+              <div class="news-date">[May 2024]</div>
+              <div class="news-title">COLM 2024 Paper</div>
+              <div class="news-description">Our paper, <strong>LLM Discussion</strong>, has been accepted to <a href="https://colmweb.org/" target="_blank">COLM 2024</a>.</div>
+            </div>
+          </div>
+          <div class="news-item">
+            <div class="news-icon">🧑‍🔬</div>
+            <div class="news-content">
+              <div class="news-date">[Nov 2023]</div>
+              <div class="news-title">RLLab Research Position</div>
+              <div class="news-description">Started a new undergraduate research position at the Robot Learning Laboratory (RLLab), NTU.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact-section" class="reveal-section">
+        <h2>Let's Connect</h2>
+        <p>Ready to collaborate or discuss exciting opportunities? I'd love to hear from you!</p>
+      </section>
     </main>
 
     <footer>
       <p>&copy; 2025 Tsung-Min (Vincent) Pai</p>
     </footer>
   </div>
+  <script src="assets/js/interactive.js"></script>
 </body>
 </html>
