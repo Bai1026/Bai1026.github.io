@@ -48,9 +48,8 @@ class InteractiveHomepage {
     }
 
     resizeCanvas() {
-        const container = this.canvas.parentElement;
-        this.canvas.width = container.offsetWidth;
-        this.canvas.height = container.offsetHeight;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
     }
 
     initParticles() {
@@ -137,16 +136,16 @@ class InteractiveHomepage {
 
         const name = 'Tsung-Min (Vincent) Pai';
         const roles = [
-            ' - AI Engineer & Researcher',
-            ' - Machine Learning Enthusiast', 
-            ' - Undergraduate Student at NTU',
-            ' - LLM Developer',
+            '- AI Engineer & Researcher',
+            '- Machine Learning Enthusiast',
+            '- Undergraduate Student at NTU',
+            '- LLM Developer',
         ];
 
         this.typeWriter(nameElement, name, 100, () => {
             setTimeout(() => {
                 this.typeWriterLoop(rolesElement, roles, 80, 2000);
-            }, 300);
+            }, 500);
         });
     }
 
