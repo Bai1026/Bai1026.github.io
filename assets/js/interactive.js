@@ -136,10 +136,10 @@ class InteractiveHomepage {
 
         const name = 'Tsung-Min (Vincent) Pai';
         const roles = [
-            '- AI Engineer & Researcher',
-            '- Machine Learning Enthusiast',
-            '- Undergraduate Student at NTU',
-            '- LLM Developer',
+            '# AI Engineer & Researcher',
+            '# Machine Learning Enthusiast',
+            '# Undergraduate Student at NTU',
+            '# LLM Developer',
         ];
 
         this.typeWriter(nameElement, name, 100, () => {
@@ -169,9 +169,9 @@ class InteractiveHomepage {
         
         const cycleText = () => {
             const currentText = texts[currentTextIndex];
-            this.typeWriter(element, currentText, speed, () => {
+            this.typeWriterWithPrefix(element, currentText, speed, () => {
                 setTimeout(() => {
-                    this.eraseText(element, speed / 2, () => {
+                    this.eraseTextKeepPrefix(element, speed / 2, () => {
                         currentTextIndex = (currentTextIndex + 1) % texts.length;
                         setTimeout(cycleText, 300);
                     });
@@ -182,15 +182,52 @@ class InteractiveHomepage {
         cycleText();
     }
 
+    typeWriterWithPrefix(element, text, speed = 100, callback = null) {
+        const prefix = '# ';
+        const mainText = text.replace(/^# /, ''); // Remove existing # prefix if any
+        let i = 0;
+        element.innerHTML = prefix + '<span class="cursor">|</span>';
+        
+        const timer = setInterval(() => {
+            if (i < mainText.length) {
+                element.innerHTML = prefix + mainText.substring(0, i + 1) + '<span class="cursor">|</span>';
+                i++;
+            } else {
+                element.innerHTML = prefix + mainText + '<span class="cursor">|</span>';
+                clearInterval(timer);
+                if (callback) callback();
+            }
+        }, speed);
+    }
+
     eraseText(element, speed = 50, callback = null) {
         const text = element.textContent;
         let i = text.length;
         
         const timer = setInterval(() => {
             if (i > 0) {
-                element.textContent = text.substring(0, i - 1);
+                element.innerHTML = text.substring(0, i - 1) + '<span class="cursor">|</span>';
                 i--;
             } else {
+                element.innerHTML = '<span class="cursor">|</span>';
+                clearInterval(timer);
+                if (callback) callback();
+            }
+        }, speed);
+    }
+
+    eraseTextKeepPrefix(element, speed = 50, callback = null) {
+        const prefix = '# ';
+        const fullText = element.textContent.replace('|', ''); // Remove cursor
+        const mainText = fullText.replace(/^# /, ''); // Get text without prefix
+        let i = mainText.length;
+        
+        const timer = setInterval(() => {
+            if (i > 0) {
+                element.innerHTML = prefix + mainText.substring(0, i - 1) + '<span class="cursor">|</span>';
+                i--;
+            } else {
+                element.innerHTML = prefix + '<span class="cursor">|</span>';
                 clearInterval(timer);
                 if (callback) callback();
             }
