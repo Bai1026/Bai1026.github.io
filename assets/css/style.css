@@ -636,7 +636,12 @@ li {
     justify-content: center;
     background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a2e 50%, #16213e 100%);
     overflow: hidden;
-    margin: -20px -20px 40px -20px;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    margin-bottom: 40px;
     padding: 20px;
 }
 

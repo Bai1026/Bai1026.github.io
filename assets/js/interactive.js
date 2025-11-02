@@ -137,16 +137,16 @@ class InteractiveHomepage {
 
         const name = 'Tsung-Min (Vincent) Pai';
         const roles = [
-            'AI Engineer & Researcher',
-            'Machine Learning Enthusiast',
-            'Undergraduate Student at NTU',
-            'LLM Developer',
+            ' - AI Engineer & Researcher',
+            ' - Machine Learning Enthusiast', 
+            ' - Undergraduate Student at NTU',
+            ' - LLM Developer',
         ];
 
         this.typeWriter(nameElement, name, 100, () => {
             setTimeout(() => {
                 this.typeWriterLoop(rolesElement, roles, 80, 2000);
-            }, 500);
+            }, 300);
         });
     }
 
