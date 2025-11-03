@@ -9,6 +9,9 @@ class InteractiveHomepage {
         this.particleCount = 50;
         this.canvas = null;
         this.ctx = null;
+        this.mouseX = 0;
+        this.mouseY = 0;
+        this.spotlightRadius = 200;
         
         this.init();
     }
@@ -24,10 +27,51 @@ class InteractiveHomepage {
 
     setup() {
         this.setupParticles();
+        this.setupSpotlightEffect();
         this.setupTypewriter();
         this.setupSmoothScroll();
         this.setupScrollReveal();
         this.setupFloatingAnimations();
+    }
+
+    setupSpotlightEffect() {
+        // Create spotlight overlay element
+        const spotlightOverlay = document.createElement('div');
+        spotlightOverlay.id = 'spotlight-overlay';
+        spotlightOverlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle 250px at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                rgba(88, 166, 255, 0.1) 0%, 
+                rgba(88, 166, 255, 0.05) 30%, 
+                rgba(0, 0, 0, 0.1) 70%, 
+                rgba(0, 0, 0, 0.2) 100%);
+            transition: all 0.1s ease;
+        `;
+        document.body.appendChild(spotlightOverlay);
+
+        // Update spotlight position on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const mouseXPercent = (e.clientX / window.innerWidth) * 100;
+            const mouseYPercent = (e.clientY / window.innerHeight) * 100;
+            
+            spotlightOverlay.style.setProperty('--mouse-x', `${mouseXPercent}%`);
+            spotlightOverlay.style.setProperty('--mouse-y', `${mouseYPercent}%`);
+        });
+
+        // Handle mouse leave to fade out spotlight
+        document.addEventListener('mouseleave', () => {
+            spotlightOverlay.style.opacity = '0.3';
+        });
+
+        document.addEventListener('mouseenter', () => {
+            spotlightOverlay.style.opacity = '1';
+        });
     }
 
     // Particle Background System
@@ -72,6 +116,9 @@ class InteractiveHomepage {
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+        // Draw spotlight effect
+        this.drawSpotlight();
+
         this.particles.forEach((particle, index) => {
             // Update position
             particle.x += particle.vx;
@@ -83,21 +130,41 @@ class InteractiveHomepage {
             if (particle.y < 0) particle.y = this.canvas.height;
             if (particle.y > this.canvas.height) particle.y = 0;
 
-            // Draw particle
+            // Calculate distance from mouse for spotlight effect
+            const dx = this.mouseX - particle.x;
+            const dy = this.mouseY - particle.y;
+            const distanceFromMouse = Math.sqrt(dx * dx + dy * dy);
+            const spotlightIntensity = Math.max(0, 1 - distanceFromMouse / this.spotlightRadius);
+            
+            // Enhanced opacity based on spotlight
+            const enhancedOpacity = particle.opacity + (spotlightIntensity * 0.6);
+            const enhancedSize = particle.size + (spotlightIntensity * 1.5);
+
+            // Draw particle with enhanced brightness
             this.ctx.beginPath();
-            this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-            this.ctx.fillStyle = `hsla(${particle.hue}, 70%, 60%, ${particle.opacity})`;
+            this.ctx.arc(particle.x, particle.y, enhancedSize, 0, Math.PI * 2);
+            this.ctx.fillStyle = `hsla(${particle.hue}, 70%, ${60 + spotlightIntensity * 40}%, ${Math.min(enhancedOpacity, 1)})`;
             this.ctx.fill();
 
-            // Draw connections
+            // Draw connections with enhanced brightness
             this.particles.slice(index + 1).forEach(otherParticle => {
-                const dx = particle.x - otherParticle.x;
-                const dy = particle.y - otherParticle.y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
+                const connectionDx = particle.x - otherParticle.x;
+                const connectionDy = particle.y - otherParticle.y;
+                const connectionDistance = Math.sqrt(connectionDx * connectionDx + connectionDy * connectionDy);
 
-                if (distance < 100) {
-                    this.ctx.strokeStyle = `hsla(${particle.hue}, 70%, 60%, ${(1 - distance / 100) * 0.3})`;
-                    this.ctx.lineWidth = 1;
+                if (connectionDistance < 100) {
+                    // Calculate average spotlight intensity for the connection
+                    const otherDx = this.mouseX - otherParticle.x;
+                    const otherDy = this.mouseY - otherParticle.y;
+                    const otherDistanceFromMouse = Math.sqrt(otherDx * otherDx + otherDy * otherDy);
+                    const otherSpotlightIntensity = Math.max(0, 1 - otherDistanceFromMouse / this.spotlightRadius);
+                    const avgSpotlightIntensity = (spotlightIntensity + otherSpotlightIntensity) / 2;
+                    
+                    const baseOpacity = (1 - connectionDistance / 100) * 0.3;
+                    const enhancedConnectionOpacity = baseOpacity + (avgSpotlightIntensity * 0.4);
+                    
+                    this.ctx.strokeStyle = `hsla(${particle.hue}, 70%, ${60 + avgSpotlightIntensity * 40}%, ${enhancedConnectionOpacity})`;
+                    this.ctx.lineWidth = 1 + avgSpotlightIntensity;
                     this.ctx.beginPath();
                     this.ctx.moveTo(particle.x, particle.y);
                     this.ctx.lineTo(otherParticle.x, otherParticle.y);
@@ -109,14 +176,33 @@ class InteractiveHomepage {
         requestAnimationFrame(() => this.animateParticles());
     }
 
+    drawSpotlight() {
+        if (!this.mouseX && !this.mouseY) return;
+
+        // Create radial gradient for spotlight effect
+        const gradient = this.ctx.createRadialGradient(
+            this.mouseX, this.mouseY, 0,
+            this.mouseX, this.mouseY, this.spotlightRadius
+        );
+        
+        gradient.addColorStop(0, 'rgba(88, 166, 255, 0.15)');
+        gradient.addColorStop(0.3, 'rgba(88, 166, 255, 0.08)');
+        gradient.addColorStop(0.6, 'rgba(88, 166, 255, 0.03)');
+        gradient.addColorStop(1, 'rgba(88, 166, 255, 0)');
+
+        // Apply the gradient
+        this.ctx.fillStyle = gradient;
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
     handleMouseMove(e) {
         const rect = this.canvas.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
+        this.mouseX = e.clientX - rect.left;
+        this.mouseY = e.clientY - rect.top;
 
         this.particles.forEach(particle => {
-            const dx = mouseX - particle.x;
-            const dy = mouseY - particle.y;
+            const dx = this.mouseX - particle.x;
+            const dy = this.mouseY - particle.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
 
             if (distance < 100) {
@@ -137,9 +223,9 @@ class InteractiveHomepage {
         const name = 'Tsung-Min (Vincent) Pai';
         const roles = [
             '# AI Engineer & Researcher',
+            '# LLM Developer',
             '# Machine Learning Enthusiast',
             '# Undergraduate Student at NTU',
-            '# LLM Developer',
         ];
 
         this.typeWriter(nameElement, name, 100, () => {
