@@ -1384,3 +1384,112 @@ footer {
     color: var(--muted-color);
     transition: color 0.3s ease, border-color 0.3s ease;
 }
+
+/* 手機版響應式設計 (Mobile Responsive Design) */
+@media screen and (max-width: 768px) {
+  
+  /* 1. 整體容器調整 */
+  .container {
+    width: 100%;
+    overflow-x: hidden; /* 防止左右滑動 */
+    padding: 0;
+  }
+
+  /* 2. Hero 區域 (個人介紹區) 改為垂直排列 */
+  .hero-content {
+    flex-direction: column; /* 上下排列 */
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+    gap: 30px; /* 增加間距 */
+  }
+
+  /* 3. 照片區域調整 */
+  .hero-visual {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    /* 確保浮動圖示不會跑太遠 */
+    position: relative; 
+  }
+
+  .profile-container {
+    /* 手機版照片稍微縮小 */
+    width: 220px;
+    height: 220px;
+  }
+
+  /* 4. 文字區域置中 */
+  .hero-text {
+    width: 100%;
+    text-align: center; /* 文字置中 */
+    padding: 0 20px;
+  }
+
+  .hero-greeting {
+    justify-content: center; /* 打招呼文字置中 */
+  }
+
+  .hero-name {
+    font-size: 2rem; /* 名字字體縮小 */
+    margin: 10px 0;
+  }
+
+  .hero-roles {
+    justify-content: center; /* 角色打字機置中 */
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+    max-width: 100%;
+  }
+
+  /* 5. 按鈕區域置中 */
+  .hero-cta {
+    justify-content: center;
+    flex-wrap: wrap; /* 如果螢幕太小，按鈕自動換行 */
+    gap: 15px;
+  }
+
+  /* 6. About Me 區域調整 */
+  .intro-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .social-icons {
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  /* 7. 最新消息 (News) 改為單欄顯示 */
+  .news-grid {
+    grid-template-columns: 1fr; /* 變成一欄 */
+    gap: 15px;
+  }
+
+  .news-item {
+    padding: 15px;
+  }
+
+  /* 8. 浮動圖示調整 (避免遮擋) */
+  .floating-elements {
+    transform: scale(0.8); /* 縮小浮動圖示 */
+    pointer-events: none; /* 防止誤觸 */
+  }
+  
+  /* 針對極小螢幕的額外調整 */
+  @media screen and (max-width: 480px) {
+    .hero-name {
+      font-size: 1.8rem;
+    }
+    
+    .profile-container {
+      width: 180px;
+      height: 180px;
+    }
+  }
+}
