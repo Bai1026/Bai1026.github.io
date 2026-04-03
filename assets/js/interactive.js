@@ -6,18 +6,18 @@
 class InteractiveHomepage {
     constructor() {
         this.particles = [];
-        this.particleCount = 50;
+        this.particleCount = window.innerWidth < 768 ? 20 : 50;
         this.canvas = null;
         this.ctx = null;
         this.mouseX = 0;
         this.mouseY = 0;
         this.spotlightRadius = 200;
-        
+        this.isVisible = true;
+
         this.init();
     }
 
     init() {
-        // Wait for DOM to be ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => this.setup());
         } else {
@@ -26,16 +26,19 @@ class InteractiveHomepage {
     }
 
     setup() {
-        this.setupParticles();
-        this.setupSpotlightEffect();
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reducedMotion) {
+            this.setupParticles();
+            this.setupSpotlightEffect();
+            this.setupFloatingAnimations();
+        }
         this.setupTypewriter();
         this.setupSmoothScroll();
         this.setupScrollReveal();
-        this.setupFloatingAnimations();
+        this.setupProfileFlip();
     }
 
     setupSpotlightEffect() {
-        // Create spotlight overlay element
         const spotlightOverlay = document.createElement('div');
         spotlightOverlay.id = 'spotlight-overlay';
         spotlightOverlay.style.cssText = `
@@ -46,25 +49,22 @@ class InteractiveHomepage {
             height: 100vh;
             pointer-events: none;
             z-index: 0;
-            background: radial-gradient(circle 250px at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-                rgba(88, 166, 255, 0.1) 0%, 
-                rgba(88, 166, 255, 0.05) 30%, 
-                rgba(0, 0, 0, 0.1) 70%, 
+            background: radial-gradient(circle 250px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                rgba(88, 166, 255, 0.1) 0%,
+                rgba(88, 166, 255, 0.05) 30%,
+                rgba(0, 0, 0, 0.1) 70%,
                 rgba(0, 0, 0, 0.2) 100%);
             transition: all 0.1s ease;
         `;
         document.body.appendChild(spotlightOverlay);
 
-        // Update spotlight position on mouse move
         document.addEventListener('mousemove', (e) => {
             const mouseXPercent = (e.clientX / window.innerWidth) * 100;
             const mouseYPercent = (e.clientY / window.innerHeight) * 100;
-            
             spotlightOverlay.style.setProperty('--mouse-x', `${mouseXPercent}%`);
             spotlightOverlay.style.setProperty('--mouse-y', `${mouseYPercent}%`);
         });
 
-        // Handle mouse leave to fade out spotlight
         document.addEventListener('mouseleave', () => {
             spotlightOverlay.style.opacity = '0.3';
         });
@@ -74,7 +74,6 @@ class InteractiveHomepage {
         });
     }
 
-    // Particle Background System
     setupParticles() {
         const container = document.getElementById('particles-canvas');
         if (!container) return;
@@ -89,6 +88,9 @@ class InteractiveHomepage {
 
         window.addEventListener('resize', () => this.resizeCanvas());
         window.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+        document.addEventListener('visibilitychange', () => {
+            this.isVisible = !document.hidden;
+        });
     }
 
     resizeCanvas() {
@@ -106,7 +108,7 @@ class InteractiveHomepage {
                 vy: (Math.random() - 0.5) * 0.5,
                 size: Math.random() * 3 + 1,
                 opacity: Math.random() * 0.5 + 0.2,
-                hue: Math.random() * 60 + 200 // Blue-purple range
+                hue: Math.random() * 60 + 200
             });
         }
     }
@@ -114,55 +116,51 @@ class InteractiveHomepage {
     animateParticles() {
         if (!this.ctx) return;
 
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        if (!this.isVisible) {
+            requestAnimationFrame(() => this.animateParticles());
+            return;
+        }
 
-        // Draw spotlight effect
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawSpotlight();
 
         this.particles.forEach((particle, index) => {
-            // Update position
             particle.x += particle.vx;
             particle.y += particle.vy;
 
-            // Wrap around edges
             if (particle.x < 0) particle.x = this.canvas.width;
             if (particle.x > this.canvas.width) particle.x = 0;
             if (particle.y < 0) particle.y = this.canvas.height;
             if (particle.y > this.canvas.height) particle.y = 0;
 
-            // Calculate distance from mouse for spotlight effect
             const dx = this.mouseX - particle.x;
             const dy = this.mouseY - particle.y;
             const distanceFromMouse = Math.sqrt(dx * dx + dy * dy);
             const spotlightIntensity = Math.max(0, 1 - distanceFromMouse / this.spotlightRadius);
-            
-            // Enhanced opacity based on spotlight
+
             const enhancedOpacity = particle.opacity + (spotlightIntensity * 0.6);
             const enhancedSize = particle.size + (spotlightIntensity * 1.5);
 
-            // Draw particle with enhanced brightness
             this.ctx.beginPath();
             this.ctx.arc(particle.x, particle.y, enhancedSize, 0, Math.PI * 2);
             this.ctx.fillStyle = `hsla(${particle.hue}, 70%, ${60 + spotlightIntensity * 40}%, ${Math.min(enhancedOpacity, 1)})`;
             this.ctx.fill();
 
-            // Draw connections with enhanced brightness
             this.particles.slice(index + 1).forEach(otherParticle => {
                 const connectionDx = particle.x - otherParticle.x;
                 const connectionDy = particle.y - otherParticle.y;
                 const connectionDistance = Math.sqrt(connectionDx * connectionDx + connectionDy * connectionDy);
 
                 if (connectionDistance < 100) {
-                    // Calculate average spotlight intensity for the connection
                     const otherDx = this.mouseX - otherParticle.x;
                     const otherDy = this.mouseY - otherParticle.y;
                     const otherDistanceFromMouse = Math.sqrt(otherDx * otherDx + otherDy * otherDy);
                     const otherSpotlightIntensity = Math.max(0, 1 - otherDistanceFromMouse / this.spotlightRadius);
                     const avgSpotlightIntensity = (spotlightIntensity + otherSpotlightIntensity) / 2;
-                    
+
                     const baseOpacity = (1 - connectionDistance / 100) * 0.3;
                     const enhancedConnectionOpacity = baseOpacity + (avgSpotlightIntensity * 0.4);
-                    
+
                     this.ctx.strokeStyle = `hsla(${particle.hue}, 70%, ${60 + avgSpotlightIntensity * 40}%, ${enhancedConnectionOpacity})`;
                     this.ctx.lineWidth = 1 + avgSpotlightIntensity;
                     this.ctx.beginPath();
@@ -179,18 +177,16 @@ class InteractiveHomepage {
     drawSpotlight() {
         if (!this.mouseX && !this.mouseY) return;
 
-        // Create radial gradient for spotlight effect
         const gradient = this.ctx.createRadialGradient(
             this.mouseX, this.mouseY, 0,
             this.mouseX, this.mouseY, this.spotlightRadius
         );
-        
+
         gradient.addColorStop(0, 'rgba(88, 166, 255, 0.15)');
         gradient.addColorStop(0.3, 'rgba(88, 166, 255, 0.08)');
         gradient.addColorStop(0.6, 'rgba(88, 166, 255, 0.03)');
         gradient.addColorStop(1, 'rgba(88, 166, 255, 0)');
 
-        // Apply the gradient
         this.ctx.fillStyle = gradient;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
@@ -207,17 +203,16 @@ class InteractiveHomepage {
 
             if (distance < 100) {
                 const force = (100 - distance) / 100;
-                particle.vx += dx * force * 0.001;
-                particle.vy += dy * force * 0.001;
+                particle.vx -= dx * force * 0.002;
+                particle.vy -= dy * force * 0.002;
             }
         });
     }
 
-    // Typewriter Effect
     setupTypewriter() {
         const nameElement = document.getElementById('typewriter-name');
         const rolesElement = document.getElementById('typewriter-roles');
-        
+
         if (!nameElement || !rolesElement) return;
 
         const name = 'Tsung-Min (Vincent) Pai';
@@ -238,7 +233,7 @@ class InteractiveHomepage {
     typeWriter(element, text, speed = 100, callback = null) {
         let i = 0;
         element.textContent = '';
-        
+
         const timer = setInterval(() => {
             if (i < text.length) {
                 element.textContent += text.charAt(i);
@@ -252,7 +247,7 @@ class InteractiveHomepage {
 
     typeWriterLoop(element, texts, speed = 100, pauseDuration = 2000) {
         let currentTextIndex = 0;
-        
+
         const cycleText = () => {
             const currentText = texts[currentTextIndex];
             this.typeWriterWithPrefix(element, currentText, speed, () => {
@@ -270,10 +265,10 @@ class InteractiveHomepage {
 
     typeWriterWithPrefix(element, text, speed = 100, callback = null) {
         const prefix = '# ';
-        const mainText = text.replace(/^# /, ''); // Remove existing # prefix if any
+        const mainText = text.replace(/^# /, '');
         let i = 0;
         element.innerHTML = prefix + '<span class="cursor">|</span>';
-        
+
         const timer = setInterval(() => {
             if (i < mainText.length) {
                 element.innerHTML = prefix + mainText.substring(0, i + 1) + '<span class="cursor">|</span>';
@@ -286,28 +281,12 @@ class InteractiveHomepage {
         }, speed);
     }
 
-    eraseText(element, speed = 50, callback = null) {
-        const text = element.textContent;
-        let i = text.length;
-        
-        const timer = setInterval(() => {
-            if (i > 0) {
-                element.innerHTML = text.substring(0, i - 1) + '<span class="cursor">|</span>';
-                i--;
-            } else {
-                element.innerHTML = '<span class="cursor">|</span>';
-                clearInterval(timer);
-                if (callback) callback();
-            }
-        }, speed);
-    }
-
     eraseTextKeepPrefix(element, speed = 50, callback = null) {
         const prefix = '# ';
-        const fullText = element.textContent.replace('|', ''); // Remove cursor
-        const mainText = fullText.replace(/^# /, ''); // Get text without prefix
+        const fullText = element.textContent.replace('|', '');
+        const mainText = fullText.replace(/^# /, '');
         let i = mainText.length;
-        
+
         const timer = setInterval(() => {
             if (i > 0) {
                 element.innerHTML = prefix + mainText.substring(0, i - 1) + '<span class="cursor">|</span>';
@@ -320,14 +299,13 @@ class InteractiveHomepage {
         }, speed);
     }
 
-    // Smooth Scrolling
     setupSmoothScroll() {
         document.querySelectorAll('[data-scroll-target]').forEach(button => {
             button.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetId = button.getAttribute('data-scroll-target');
                 const targetElement = document.querySelector(targetId);
-                
+
                 if (targetElement) {
                     targetElement.scrollIntoView({
                         behavior: 'smooth',
@@ -338,10 +316,9 @@ class InteractiveHomepage {
         });
     }
 
-    // Scroll Reveal Animation
     setupScrollReveal() {
         const revealElements = document.querySelectorAll('.reveal-section');
-        
+
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -358,26 +335,18 @@ class InteractiveHomepage {
         });
     }
 
-    // Floating Animations
     setupFloatingAnimations() {
-        // Add floating animation to profile image
         const profileContainer = document.querySelector('.profile-container');
         if (profileContainer) {
             profileContainer.classList.add('floating');
         }
 
-        // Animate floating icons
-        document.querySelectorAll('.floating-icon').forEach((icon, index) => {
-            icon.style.setProperty('--random-x', Math.random() * 200 - 100);
-            icon.style.setProperty('--random-y', Math.random() * 200 - 100);
-            
-            // Add emoji content
+        document.querySelectorAll('.floating-icon').forEach((icon) => {
             const emoji = icon.getAttribute('data-icon');
             icon.textContent = emoji;
         });
     }
 
-    // Profile Picture Flip Effect
     setupProfileFlip() {
         const profileContainer = document.getElementById('profile-flip-container');
         if (!profileContainer) return;
@@ -386,7 +355,6 @@ class InteractiveHomepage {
             profileContainer.classList.toggle('flipped');
         });
 
-        // Add hover effect for visual feedback
         profileContainer.addEventListener('mouseenter', () => {
             if (!profileContainer.classList.contains('flipped')) {
                 profileContainer.style.transform = 'scale(1.05)';
@@ -401,8 +369,3 @@ class InteractiveHomepage {
 
 // Initialize when page loads
 const interactiveHomepage = new InteractiveHomepage();
-
-// Setup profile flip effect
-document.addEventListener('DOMContentLoaded', () => {
-    interactiveHomepage.setupProfileFlip();
-});
