@@ -1376,6 +1376,27 @@ li {
     z-index: 1;
 }
 
+/* Venue Badge */
+.badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.78em;
+    font-weight: 600;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+.badge.oral {
+    background-color: rgba(88, 166, 255, 0.15);
+    color: var(--link-color);
+    border: 1px solid var(--link-color);
+}
+
+[data-theme="light"] .badge.oral {
+    background-color: rgba(9, 105, 218, 0.1);
+}
+
 /* Footer */
 footer {
     text-align: center;
