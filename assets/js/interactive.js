@@ -36,6 +36,14 @@ class InteractiveHomepage {
         this.setupSmoothScroll();
         this.setupScrollReveal();
         this.setupProfileFlip();
+        this.updateFooterYear();
+    }
+
+    updateFooterYear() {
+        const footer = document.querySelector('footer p');
+        if (footer) {
+            footer.innerHTML = footer.innerHTML.replace(/\d{4}/, new Date().getFullYear());
+        }
     }
 
     setupSpotlightEffect() {
@@ -122,7 +130,6 @@ class InteractiveHomepage {
         }
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.drawSpotlight();
 
         this.particles.forEach((particle, index) => {
             particle.x += particle.vx;
@@ -172,23 +179,6 @@ class InteractiveHomepage {
         });
 
         requestAnimationFrame(() => this.animateParticles());
-    }
-
-    drawSpotlight() {
-        if (!this.mouseX && !this.mouseY) return;
-
-        const gradient = this.ctx.createRadialGradient(
-            this.mouseX, this.mouseY, 0,
-            this.mouseX, this.mouseY, this.spotlightRadius
-        );
-
-        gradient.addColorStop(0, 'rgba(88, 166, 255, 0.15)');
-        gradient.addColorStop(0.3, 'rgba(88, 166, 255, 0.08)');
-        gradient.addColorStop(0.6, 'rgba(88, 166, 255, 0.03)');
-        gradient.addColorStop(1, 'rgba(88, 166, 255, 0)');
-
-        this.ctx.fillStyle = gradient;
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     handleMouseMove(e) {
