@@ -1,0 +1,126 @@
+---
+// Fake terminal window whose command sequence is typed out on load.
+---
+
+<section class="hero">
+  <div class="hero-main">
+    <div class="terminal">
+      <div class="terminal-titlebar">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+        <span class="terminal-title">vincent@ntu: ~ — zsh</span>
+      </div>
+      <div class="terminal-body" id="terminal-body" aria-label="Introduction terminal animation">
+        <noscript>
+          <span class="out">Tsung-Min (Vincent) Pai — AI Engineer &amp; Researcher (NTU EE)</span>
+          <span class="out">Machine Learning · Generative AI · Large Language Models</span>
+        </noscript>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="mailto:b09602017@g.ntu.edu.tw" class="btn btn-primary">
+        <i class="fas fa-paper-plane"></i><span>./contact --me</span>
+      </a>
+      <a href="#news-section" class="btn btn-ghost">
+        <i class="fas fa-arrow-down"></i><span>git log --news</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-side">
+    <div class="profile-frame" id="profile-frame" title="Click to flip">
+      <div class="profile-flip">
+        <div class="profile-face front">
+          <img fetchpriority="high" decoding="async" src="/assets/img/profile.webp" alt="Tsung-Min Pai" />
+        </div>
+        <div class="profile-face back">
+          <img loading="lazy" decoding="async" src="/assets/img/profile4.webp" alt="Tsung-Min Pai — alternative" />
+        </div>
+      </div>
+    </div>
+    <div class="hero-tags">
+      <span class="tag blue">machine-learning</span>
+      <span class="tag green">generative-ai</span>
+      <span class="tag purple">llm</span>
+      <span class="tag">🏀 baller</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  // ---- profile flip ----
+  document.getElementById('profile-frame')?.addEventListener('click', (e) => {
+    (e.currentTarget as HTMLElement).classList.toggle('flipped');
+  });
+
+  // ---- terminal typewriter ----
+  const body = document.getElementById('terminal-body');
+
+  const PROMPT =
+    '<span class="prompt-user">vincent@ntu</span><span class="prompt-sign">:</span><span class="prompt-path">~</span><span class="prompt-sign">$ </span>';
+
+  const script = [
+    {
+      cmd: 'whoami',
+      out: '<span class="hl">Tsung-Min (Vincent) Pai</span> — AI Engineer &amp; Researcher\nB.S. in Electrical Engineering, National Taiwan University',
+    },
+    {
+      cmd: 'cat interests.txt',
+      out: '<span class="str">"Machine Learning"</span> · <span class="str">"Generative AI"</span> · <span class="str">"Large Language Models"</span>',
+    },
+    {
+      cmd: 'ls ./highlights',
+      out: 'EACL26-oral/  ICLR25/  COLM24/  ai-engineer@LOGOLO/',
+    },
+  ];
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function finalHTML() {
+    return script
+      .map((s) => `${PROMPT}<span class="cmd">${s.cmd}</span>\n<span class="out">${s.out}</span>`)
+      .join('') + `${PROMPT}<span class="cursor"></span>`;
+  }
+
+  async function type() {
+    if (!body) return;
+    if (reduced) {
+      body.innerHTML = finalHTML();
+      return;
+    }
+
+    const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    let html = '';
+
+    for (const step of script) {
+      html += PROMPT;
+      body.innerHTML = html + '<span class="cursor"></span>';
+      await sleep(350);
+
+      // type the command character by character
+      let typed = '';
+      for (const ch of step.cmd) {
+        typed += ch;
+        body.innerHTML = html + `<span class="cmd">${typed}</span><span class="cursor"></span>`;
+        await sleep(38 + Math.floor(Math.sin(typed.length * 7) * 14 + 14));
+      }
+      await sleep(260);
+
+      // print output instantly (like a real terminal)
+      html += `<span class="cmd">${step.cmd}</span>\n<span class="out">${step.out}</span>`;
+      body.innerHTML = html + '<span class="cursor"></span>';
+      await sleep(420);
+    }
+
+    html += PROMPT;
+    body.innerHTML = html + '<span class="cursor"></span>';
+  }
+
+  type();
+</script>
+
+<style>
+  .hero-main { min-width: 0; }
+  .terminal-body { white-space: pre-wrap; word-break: break-word; }
+</style>

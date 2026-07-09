@@ -1,0 +1,126 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import teams from '../data/basketball.json';
+---
+
+<BaseLayout
+  title="Basketball - Tsung-Min (Vincent) Pai"
+  description="Basketball journey of Tsung-Min (Vincent) Pai — NTU EE department team vice captain and coach, league championships and awards."
+  path="/basketball"
+>
+  <PageHead name="basketball" subtitle="Extracurricular Activities" />
+
+  {teams.map((team, teamIndex) => (
+    <div class="card reveal">
+      <h3>
+        🏀 {team.titleUrl ? <a href={team.titleUrl} target="_blank">{team.title}</a> : team.title}
+      </h3>
+      <div class="meta">
+        <span><span class="k">role:</span> {team.type}</span>
+        <span><span class="k">period:</span> {team.period}</span>
+        <span class="loc"><i class="fas fa-location-dot"></i> {team.location}</span>
+      </div>
+
+      <div class="gallery-container" id={team.id}>
+        <div class="gallery-wrapper">
+          {team.photos.map((photo, i) => (
+            <div class={`photo-slide ${i === 0 ? 'active' : ''}`}>
+              <img
+                loading={teamIndex === 0 && i === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+                src={photo.src}
+                alt={`${team.title} photo ${i + 1}`}
+              />
+              {photo.caption && <div class="photo-caption">{photo.caption}</div>}
+            </div>
+          ))}
+        </div>
+        <button class="gallery-btn prev-btn" aria-label="Previous photo"><i class="fas fa-chevron-left"></i></button>
+        <button class="gallery-btn next-btn" aria-label="Next photo"><i class="fas fa-chevron-right"></i></button>
+        <div class="gallery-dots"></div>
+      </div>
+
+      {team.video && (
+        <div class="video-grid">
+          <h4 class="mono"><i class="fas fa-video"></i> {team.video.title}</h4>
+          <div class="video-container">
+            <video controls preload="none" poster={team.video.poster}>
+              <source src={team.video.src} type="video/mp4" />
+              你的瀏覽器不支援影片播放。
+            </video>
+          </div>
+        </div>
+      )}
+    </div>
+  ))}
+
+  <div class="closing-bracket mono reveal">];</div>
+</BaseLayout>
+
+<style>
+  .closing-bracket { font-size: 1.4rem; color: var(--text-dim); padding-bottom: 2rem; }
+</style>
+
+<script>
+  class PhotoGallery {
+    container: HTMLElement;
+    slides: NodeListOf<HTMLElement>;
+    dots: NodeListOf<HTMLElement>;
+    currentSlide = 0;
+
+    constructor(container: HTMLElement) {
+      this.container = container;
+      this.slides = container.querySelectorAll('.photo-slide');
+
+      const dotsContainer = container.querySelector('.gallery-dots')!;
+      this.slides.forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.className = 'dot';
+        dot.addEventListener('click', () => this.showSlide(index));
+        dotsContainer.appendChild(dot);
+      });
+      this.dots = dotsContainer.querySelectorAll('.dot');
+
+      container.querySelector('.prev-btn')?.addEventListener('click', () => this.previousSlide());
+      container.querySelector('.next-btn')?.addEventListener('click', () => this.nextSlide());
+      this.showSlide(0);
+    }
+
+    showSlide(index: number) {
+      this.slides.forEach((s) => s.classList.remove('active'));
+      this.dots.forEach((d) => d.classList.remove('active'));
+      this.slides[index]?.classList.add('active');
+      this.dots[index]?.classList.add('active');
+      this.currentSlide = index;
+    }
+
+    nextSlide() {
+      this.showSlide((this.currentSlide + 1) % this.slides.length);
+    }
+
+    previousSlide() {
+      this.showSlide((this.currentSlide - 1 + this.slides.length) % this.slides.length);
+    }
+  }
+
+  const galleries: Record<string, PhotoGallery> = {};
+  document.querySelectorAll<HTMLElement>('.gallery-container[id]').forEach((el) => {
+    galleries[el.id] = new PhotoGallery(el);
+  });
+
+  // hover a gallery, then use arrow keys to navigate
+  document.addEventListener('keydown', (e) => {
+    const hovered = document.querySelector<HTMLElement>('.gallery-container:hover');
+    if (!hovered) return;
+    const gallery = galleries[hovered.id];
+    if (!gallery) return;
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      gallery.previousSlide();
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      gallery.nextSlide();
+    }
+  });
+</script>

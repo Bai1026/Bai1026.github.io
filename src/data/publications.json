@@ -1,0 +1,43 @@
+[
+  {
+    "title": "BILLY: Steering Large Language Models via Merging Persona Vectors for Creative Generation",
+    "image": "/assets/img/billy.webp",
+    "authorsHtml": "<strong>Tsung-Min Pai</strong>, Jui-I Wang, Li-Chun Lu, Shao-Hua Sun, Hung-yi Lee, Kai-Wei Chang",
+    "venue": "EACL 2026",
+    "venueUrl": "https://2026.eacl.org/",
+    "badge": "Oral",
+    "links": [
+      { "label": "Paper", "icon": "fas fa-file-alt", "url": "https://aclanthology.org/2026.eacl-long.369/" },
+      { "label": "Github", "icon": "fab fa-github", "url": "https://github.com/Bai1026/LLM_Persona/" },
+      { "label": "Website", "icon": "fas fa-globe", "url": "https://bai1026.github.io/LLM_Persona/" }
+    ],
+    "abstract": "A novel method that merges persona vectors of LLMs to enhance creativity, boosting originality by 15% and reducing costs by 95% compared to multi-LLM baselines."
+  },
+  {
+    "title": "Dynamic-SUPERB Phase-2: An Open Benchmark for Comprehensive Evaluation of Spoken Language Models",
+    "image": "/assets/img/superb.webp",
+    "authorsHtml": "Chien-yu Huang, Wei-Chih Chen, et al..., <strong>Tsung-Min Pai</strong>, et al..., Hung-yi Lee",
+    "venue": "ICLR 2025",
+    "venueUrl": "https://iclr.cc/Conferences/2025",
+    "badge": null,
+    "links": [
+      { "label": "Paper", "icon": "fas fa-file-alt", "url": "https://arxiv.org/abs/2411.05361" },
+      { "label": "Github", "icon": "fab fa-github", "url": "https://github.com/dynamic-superb/dynamic-superb" }
+    ],
+    "abstract": "Contributed the \"Covid19CoughAudioClassification\" task to this expanding benchmark for evaluating universal spoken language models."
+  },
+  {
+    "title": "LLM Discussion: Enhancing the Creativity of Large Language Models via Discussion Framework and Role-Play",
+    "image": "/assets/img/llm_d.webp",
+    "authorsHtml": "Li-Chun Lu*, Shou-Jen Chen*, <strong>Tsung-Min Pai</strong>, Chan-Hung Yu, Hung-yi Lee, Shao-Hua Sun",
+    "venue": "COLM 2024",
+    "venueUrl": "https://colmweb.org/",
+    "badge": null,
+    "links": [
+      { "label": "Paper", "icon": "fas fa-file-alt", "url": "https://arxiv.org/abs/2405.06373" },
+      { "label": "Github", "icon": "fab fa-github", "url": "https://github.com/lawraa/LLM-Discussion" },
+      { "label": "Website", "icon": "fas fa-globe", "url": "https://bai1026.github.io/LLM-Discussion/" }
+    ],
+    "abstract": "Developed a multi-agent discussion framework using role-play that boosted LLM creativity scores by 20% over existing methods."
+  }
+]

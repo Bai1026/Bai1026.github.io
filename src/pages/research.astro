@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import research from '../data/research.json';
+---
+
+<BaseLayout
+  title="Research Experience - Tsung-Min (Vincent) Pai"
+  description="Research experience of Tsung-Min (Vincent) Pai — LLM creativity and speech benchmarks at SPMLLab and RLLab, National Taiwan University."
+  path="/research"
+>
+  <PageHead name="research" />
+
+  {research.map((lab) => (
+    <div class="card reveal">
+      <h3 set:html={lab.titleHtml} />
+      <div class="meta">
+        <span><span class="k">type:</span> {lab.type}</span>
+        <span><span class="k">period:</span> {lab.period}</span>
+        <span class="loc"><i class="fas fa-location-dot"></i> {lab.location}</span>
+        <span set:html={lab.extraHtml} />
+      </div>
+      <ul>
+        {lab.bulletsHtml.map((b) => <li set:html={b} />)}
+      </ul>
+    </div>
+  ))}
+
+  <div class="closing-bracket mono reveal">];</div>
+</BaseLayout>
+
+<style>
+  .closing-bracket { font-size: 1.4rem; color: var(--text-dim); padding-bottom: 2rem; }
+</style>

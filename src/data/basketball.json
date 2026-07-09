@@ -1,0 +1,91 @@
+[
+  {
+    "id": "gallery0",
+    "title": "Awards for Basketball",
+    "location": "Taipei, Taiwan",
+    "type": "Basketball Player",
+    "period": "Jan 2012 - Present",
+    "photos": [
+      { "src": "/assets/img/basketball/award/1.webp" },
+      { "src": "/assets/img/basketball/award/2.webp", "caption": "Performance of the Game" },
+      { "src": "/assets/img/basketball/award/3.webp", "caption": "Assist Champion of TGB League" },
+      { "src": "/assets/img/basketball/award/4.webp", "caption": "Championship of TGB League" },
+      { "src": "/assets/img/basketball/award/5.webp", "caption": "Runner-up of TGB League" },
+      { "src": "/assets/img/basketball/award/6.webp", "caption": "Runner-up of TGB League" },
+      { "src": "/assets/img/basketball/award/7.webp", "caption": "Fourth Place of NTU League, with my UCB phd dude" },
+      { "src": "/assets/img/basketball/award/8.webp", "caption": "Runner-up of NTU League" },
+      { "src": "/assets/img/basketball/award/9.webp", "caption": "Runner-up of Environmantal Cup" },
+      { "src": "/assets/img/basketball/award/10.webp", "caption": "Third Place of Taichung Mayor Cup" }
+    ]
+  },
+  {
+    "id": "gallery1",
+    "title": "Department Basketball Team, NTU Electrical Engineering",
+    "titleUrl": "https://web.ee.ntu.edu.tw/",
+    "location": "Taipei, Taiwan",
+    "type": "Vice Captain / Coach / Team Member",
+    "period": "Sep 2021 - Aug 2025",
+    "photos": [
+      { "src": "/assets/img/basketball/dept/1.webp" },
+      { "src": "/assets/img/basketball/dept/8.webp" },
+      { "src": "/assets/img/basketball/dept/3.webp" },
+      { "src": "/assets/img/basketball/dept/4.webp" },
+      { "src": "/assets/img/basketball/dept/5.webp" },
+      { "src": "/assets/img/basketball/dept/6.webp" },
+      { "src": "/assets/img/basketball/dept/7.webp" },
+      { "src": "/assets/img/basketball/dept/9.webp" },
+      { "src": "/assets/img/basketball/dept/10.webp" },
+      { "src": "/assets/img/basketball/dept/11.webp" },
+      { "src": "/assets/img/basketball/dept/12.webp" }
+    ],
+    "video": {
+      "title": "2022 NTU Cup Highlights",
+      "src": "/assets/videos/highlights-2022-ntu-cup.mp4",
+      "poster": "/assets/img/basketball/dept/1.webp"
+    }
+  },
+  {
+    "id": "gallery2",
+    "title": "School Basketball Team, NTU",
+    "titleUrl": "https://www.ntu.edu.tw/",
+    "location": "Taipei, Taiwan",
+    "type": "Team Member",
+    "period": "Sep 2020 - Aug 2021",
+    "photos": [
+      { "src": "/assets/img/basketball/school/1.webp", "caption": "First Game" },
+      { "src": "/assets/img/basketball/school/3.webp" },
+      { "src": "/assets/img/basketball/school/4.webp" },
+      { "src": "/assets/img/basketball/school/2.webp" }
+    ]
+  },
+  {
+    "id": "gallery3",
+    "title": "High School Basketball Team, Taichung First Senior High School",
+    "location": "Taichung, Taiwan",
+    "type": "Team Member",
+    "period": "Sep 2018 - Jun 2020",
+    "photos": [
+      { "src": "/assets/img/basketball/highschool/1.webp" },
+      { "src": "/assets/img/basketball/highschool/2.webp" },
+      { "src": "/assets/img/basketball/highschool/3.webp" }
+    ]
+  },
+  {
+    "id": "gallery4",
+    "title": "Weekend League Basketball Teams",
+    "location": "Taipei, Taiwan",
+    "type": "Basketball Player",
+    "period": "Dec 2020 - Present",
+    "photos": [
+      { "src": "/assets/img/basketball/outlier/1.webp" },
+      { "src": "/assets/img/basketball/outlier/2.webp" },
+      { "src": "/assets/img/basketball/outlier/3.webp" },
+      { "src": "/assets/img/basketball/outlier/4.webp" },
+      { "src": "/assets/img/basketball/outlier/5.webp" },
+      { "src": "/assets/img/basketball/outlier/6.webp" },
+      { "src": "/assets/img/basketball/outlier/7.webp" },
+      { "src": "/assets/img/basketball/outlier/8.webp" },
+      { "src": "/assets/img/basketball/outlier/9.webp" }
+    ]
+  }
+]

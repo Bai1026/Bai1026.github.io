@@ -1,0 +1,17 @@
+---
+// Code-styled page header: `const work = [` etc.
+interface Props {
+  name: string;      // variable name shown in the heading
+  subtitle?: string;
+}
+const { name, subtitle } = Astro.props;
+---
+
+<div class="page-head reveal">
+  <div class="breadcrumb">~<span class="sep">/</span>{name}</div>
+  <h1>
+    <span class="kw">const</span> <span class="fn">{name}</span>
+    <span class="punc">=</span> <span class="punc">[</span>
+  </h1>
+  {subtitle && <p class="subtitle">{subtitle}</p>}
+</div>

@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+import publications from '../data/publications.json';
+---
+
+<BaseLayout
+  title="Publications - Tsung-Min (Vincent) Pai"
+  description="Publications of Tsung-Min (Vincent) Pai — BILLY (EACL 2026 Oral), Dynamic-SUPERB Phase-2 (ICLR 2025), and LLM Discussion (COLM 2024)."
+  path="/publications"
+>
+  <PageHead name="publications" subtitle="Publications & Conference Experience" />
+
+  {publications.map((pub) => (
+    <div class="card pub-card reveal">
+      <div class="thumb">
+        <img loading="lazy" decoding="async" src={pub.image} alt={`${pub.venue} paper thumbnail`} />
+      </div>
+      <div>
+        <h3>{pub.title}</h3>
+        <div class="authors" set:html={pub.authorsHtml} />
+        <div class="venue">
+          <a href={pub.venueUrl} target="_blank">{pub.venue}</a>
+          {pub.badge && <span class="badge oral">{pub.badge}</span>}
+        </div>
+        <div class="pub-links">
+          {pub.links.map((link) => (
+            <a href={link.url} target="_blank"><i class={link.icon}></i> {link.label}</a>
+          ))}
+        </div>
+        <p class="abstract">{pub.abstract}</p>
+      </div>
+    </div>
+  ))}
+
+  <div class="closing-bracket mono reveal">];</div>
+</BaseLayout>
+
+<style>
+  .closing-bracket { font-size: 1.4rem; color: var(--text-dim); padding-bottom: 2rem; }
+</style>

@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHead from '../components/PageHead.astro';
+---
+
+<BaseLayout
+  title="Teaching Experience - Tsung-Min (Vincent) Pai"
+  description="Teaching experience of Tsung-Min (Vincent) Pai — TA for Introduction to Generative AI at NTU, a course with over 1,000 students."
+  path="/teaching"
+>
+  <PageHead name="teaching" />
+
+  <div class="card reveal">
+    <h3>Introduction to Generative AI, NTU</h3>
+    <div class="meta">
+      <span><span class="k">type:</span> Teaching Assistant (TA)</span>
+      <span><span class="k">period:</span> Sep 2024 - Aug 2025</span>
+      <span class="loc"><i class="fas fa-location-dot"></i> Taipei, Taiwan</span>
+    </div>
+    <ul>
+      <li>Collaborated with 30+ TAs to manage a class of over 1,000 students and 1,000 auditors.</li>
+      <li>Designed and graded a coursework related to token importance and LLM interpretation with two other TAs.</li>
+      <li>
+        Contributed to "Large Language Model as an Assignment Evaluator: Insights, Feedback, and Challenges in a
+        1000+ Student Course", published in <a href="https://2024.emnlp.org/" target="_blank">EMNLP 2024</a>.
+      </li>
+      <li><a href="https://speech.ee.ntu.edu.tw/~hylee/genai/2024-spring.php" target="_blank">Course Webpage</a></li>
+    </ul>
+  </div>
+
+  <div class="closing-bracket mono reveal">];</div>
+</BaseLayout>
+
+<style>
+  .closing-bracket { font-size: 1.4rem; color: var(--text-dim); padding-bottom: 2rem; }
+</style>

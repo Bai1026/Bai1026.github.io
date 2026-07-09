@@ -1,0 +1,249 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string; // e.g. "/work" — used for canonical + active nav
+}
+
+const { title, description, path } = Astro.props;
+const canonical = new URL(path === '/' ? '/' : `${path}.html`, Astro.site);
+
+const navItems = [
+  { href: '/', label: 'about' },
+  { href: '/work', label: 'work' },
+  { href: '/research', label: 'research' },
+  { href: '/publications', label: 'publications' },
+  { href: '/teaching', label: 'teaching' },
+  { href: '/basketball', label: 'basketball' },
+];
+
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content="https://bai1026.github.io/assets/img/og-image.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <title>{title}</title>
+  <link rel="icon" type="image/png" href="/assets/img/robot.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+  <script is:inline>
+    // set theme before first paint to avoid flash
+    (function () {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="inner">
+      <a href="/" class="brand">
+        <span class="prompt">vincent@ntu</span><span>:</span><span class="tilde">~</span><span>$</span>
+      </a>
+      <nav class="site-nav">
+        {navItems.map((item) => (
+          <a href={item.href} class={isActive(item.href) ? 'active' : ''}>{item.label}</a>
+        ))}
+      </nav>
+      <div class="header-actions">
+        <button class="icon-btn" id="palette-trigger" title="Command palette">
+          <i class="fas fa-terminal"></i>
+          <span class="kbd-hint">⌘K</span>
+        </button>
+        <button class="icon-btn" id="theme-toggle" title="Toggle theme">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <slot />
+  </div>
+
+  <footer class="statusbar">
+    <div class="inner">
+      <div class="group">
+        <span class="item branch"><i class="fas fa-code-branch"></i> main</span>
+        <span class="item"><span class="online-dot"></span> open to opportunities</span>
+      </div>
+      <div class="group">
+        <span class="item">UTF-8</span>
+        <span class="item">&copy; <span id="year">2026</span> Tsung-Min (Vincent) Pai</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- command palette -->
+  <div class="palette-backdrop" id="palette-backdrop">
+    <div class="palette" role="dialog" aria-label="Command palette">
+      <input type="text" id="palette-input" placeholder="Type a command or search..." autocomplete="off" />
+      <div class="palette-list" id="palette-list"></div>
+    </div>
+  </div>
+
+  <script>
+    // ---- footer year ----
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+    // ---- theme toggle ----
+    const toggleBtn = document.getElementById('theme-toggle');
+    const applyThemeIcon = () => {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      toggleBtn!.innerHTML = isLight
+        ? '<i class="fas fa-moon"></i>'
+        : '<i class="fas fa-sun"></i>';
+    };
+    applyThemeIcon();
+    toggleBtn?.addEventListener('click', () => {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (isLight) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+      }
+      applyThemeIcon();
+    });
+
+    // ---- scroll reveal ----
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const revealEls = document.querySelectorAll('.reveal');
+    if (reduced) {
+      revealEls.forEach((el) => el.classList.add('visible'));
+    } else {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              io.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.08 }
+      );
+      revealEls.forEach((el) => io.observe(el));
+    }
+
+    // ---- command palette ----
+    const commands = [
+      { label: 'cd ~/about', icon: 'fa-solid fa-user', href: '/', hint: 'page' },
+      { label: 'cd ~/work', icon: 'fa-solid fa-briefcase', href: '/work', hint: 'page' },
+      { label: 'cd ~/research', icon: 'fa-solid fa-flask', href: '/research', hint: 'page' },
+      { label: 'cd ~/publications', icon: 'fa-solid fa-file-lines', href: '/publications', hint: 'page' },
+      { label: 'cd ~/teaching', icon: 'fa-solid fa-chalkboard-user', href: '/teaching', hint: 'page' },
+      { label: 'cd ~/basketball', icon: 'fa-solid fa-basketball', href: '/basketball', hint: 'page' },
+      { label: 'open github', icon: 'fa-brands fa-github', href: 'https://github.com/Bai1026', hint: 'link' },
+      { label: 'open linkedin', icon: 'fa-brands fa-linkedin', href: 'https://www.linkedin.com/in/tsung-ming-pai/', hint: 'link' },
+      { label: 'open scholar', icon: 'fa-solid fa-graduation-cap', href: 'https://scholar.google.com/citations?hl=zh-TW&user=7Hq3tdcAAAAJ&view_op=list_works', hint: 'link' },
+      { label: 'open cv.pdf', icon: 'fa-solid fa-file-pdf', href: '/assets/documents/CV.pdf', hint: 'file' },
+      { label: 'mail vincent', icon: 'fa-solid fa-envelope', href: 'mailto:b09602017@g.ntu.edu.tw', hint: 'action' },
+    ];
+
+    const backdrop = document.getElementById('palette-backdrop')!;
+    const input = document.getElementById('palette-input') as HTMLInputElement;
+    const list = document.getElementById('palette-list')!;
+    let filtered = [...commands];
+    let selected = 0;
+
+    function render() {
+      if (filtered.length === 0) {
+        list.innerHTML = '<div class="palette-empty">command not found</div>';
+        return;
+      }
+      list.innerHTML = filtered
+        .map(
+          (c, i) => `
+          <div class="palette-item ${i === selected ? 'selected' : ''}" data-index="${i}">
+            <i class="${c.icon}"></i><span>${c.label}</span><span class="hint">${c.hint}</span>
+          </div>`
+        )
+        .join('');
+      list.querySelectorAll('.palette-item').forEach((el) => {
+        el.addEventListener('click', () => run(filtered[Number((el as HTMLElement).dataset.index)]));
+        el.addEventListener('mousemove', () => {
+          selected = Number((el as HTMLElement).dataset.index);
+          render();
+        });
+      });
+    }
+
+    function run(cmd: (typeof commands)[number]) {
+      close();
+      if (cmd.href.startsWith('http')) window.open(cmd.href, '_blank');
+      else window.location.href = cmd.href;
+    }
+
+    function open() {
+      backdrop.classList.add('open');
+      input.value = '';
+      filtered = [...commands];
+      selected = 0;
+      render();
+      input.focus();
+    }
+
+    function close() {
+      backdrop.classList.remove('open');
+    }
+
+    document.getElementById('palette-trigger')?.addEventListener('click', open);
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) close();
+    });
+
+    input.addEventListener('input', () => {
+      const q = input.value.toLowerCase().trim();
+      filtered = commands.filter((c) => c.label.toLowerCase().includes(q));
+      selected = 0;
+      render();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        backdrop.classList.contains('open') ? close() : open();
+        return;
+      }
+      if (!backdrop.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        selected = Math.min(selected + 1, filtered.length - 1);
+        render();
+      }
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        selected = Math.max(selected - 1, 0);
+        render();
+      }
+      if (e.key === 'Enter' && filtered[selected]) run(filtered[selected]);
+    });
+  </script>
+</body>
+</html>

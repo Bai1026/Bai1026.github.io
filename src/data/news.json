@@ -1,0 +1,58 @@
+[
+  {
+    "hash": "e4c1a26",
+    "date": "2026-01",
+    "title": "EACL 2026 Acceptance",
+    "milestone": true,
+    "html": "Our paper, <strong>BILLY: Steering Large Language Models via Merging Persona Vectors for Creative Generation</strong>, was accepted to <a href=\"https://2026.eacl.org/\" target=\"_blank\">EACL 2026</a> <span class=\"badge oral\">Oral</span>."
+  },
+  {
+    "hash": "b7f9d03",
+    "date": "2025-09",
+    "title": "New AI Engineer Role",
+    "milestone": false,
+    "html": "Started my new role as an AI Engineer (Contractor) at LOGOLO."
+  },
+  {
+    "hash": "a1c5r25",
+    "date": "2024-11",
+    "title": "ICLR 2025 Acceptance",
+    "milestone": true,
+    "html": "Our paper, <strong>Dynamic-SUPERB Phase-2</strong>, was accepted to <a href=\"https://iclr.cc/Conferences/2025\" target=\"_blank\">ICLR 2025</a>."
+  },
+  {
+    "hash": "9e2b8f1",
+    "date": "2024-09",
+    "title": "AI Engineer at Genibuilder",
+    "milestone": false,
+    "html": "Started my full-time position as an AI Engineer at Genibuilder."
+  },
+  {
+    "hash": "7d4a6c9",
+    "date": "2024-07",
+    "title": "AI Engineer Internship at Compal Electronics",
+    "milestone": false,
+    "html": "Started my internship position as an AI Engineer at Compal."
+  },
+  {
+    "hash": "c01m24a",
+    "date": "2024-05",
+    "title": "COLM 2024 Acceptance",
+    "milestone": true,
+    "html": "Our paper, <strong>LLM Discussion</strong>, was accepted to <a href=\"https://colmweb.org/\" target=\"_blank\">COLM 2024</a>."
+  },
+  {
+    "hash": "5f8e2d7",
+    "date": "2023-11",
+    "title": "RLLab Research Position",
+    "milestone": false,
+    "html": "Started a new undergraduate research position at the Robot Learning Laboratory (RLLab), NTU."
+  },
+  {
+    "hash": "3a9c4b2",
+    "date": "2023-08",
+    "title": "SPMLLab Research Position",
+    "milestone": false,
+    "html": "Started a new undergraduate research position at the Speech Processing and Machine Learning Laboratory (SPMLLab), NTU."
+  }
+]
