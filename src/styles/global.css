@@ -299,19 +299,6 @@ img { max-width: 100%; display: block; }
   perspective: 900px;
 }
 
-.profile-frame::before {
-  content: '';
-  position: absolute;
-  inset: -14px;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, var(--accent), var(--purple), var(--green), var(--accent));
-  filter: blur(18px);
-  opacity: 0.45;
-  animation: spin 9s linear infinite;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
 .profile-flip {
   position: relative;
   width: 100%;
